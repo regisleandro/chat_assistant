@@ -83,12 +83,6 @@ if 'messages' not in st.session_state:
     st.session_state.messages = []
     st.session_state['messages'] = [{'role': 'assistant', 'content': 'Olá, como posso ajudá-lo?'}]
 
-prompt_template = """
-    Você é um assistante online, voltado a agricultores, que irá responder: {}, utilizando como contexto: {}.
-    Se você não souber a resposta, apenas diga que não sabe, não tente inventar uma resposta.
-    Procure responder a pergunta de forma clara e objetiva.
-  """
-
 for message in st.session_state.messages:
   with st.chat_message(message['role']):
       st.markdown(message['content'])
@@ -101,10 +95,6 @@ if prompt := st.chat_input('Como posso ajudar?'):
   for document in documents:
     list_documents.append(document[0].page_content)
 
-  print(f"list_documents: {list_documents}")
-  #st.session_state.messages.append({'role': 'user', 'content': prompt})
-
-  # full_prompt = prompt_template.format(prompt, ", ".join(list_documents))
   with st.chat_message('user'):
     st.markdown(prompt)
   with st.chat_message('assistant'):
