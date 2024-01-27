@@ -3,10 +3,13 @@ import time
 import streamlit as st
 import openai
 from dotenv import load_dotenv
-from langchain.vectorstores import MongoDBAtlasVectorSearch
+
+from langchain_community.vectorstores import MongoDBAtlasVectorSearch
+from langchain_community.embeddings import HuggingFaceEmbeddings
+from langchain_community.chat_models import ChatOpenAI
+
 from pymongo import MongoClient
-from langchain.embeddings import HuggingFaceEmbeddings
-from langchain.chat_models import ChatOpenAI
+
 from langchain.prompts.chat import (
     ChatPromptTemplate,
     HumanMessagePromptTemplate,
@@ -108,24 +111,7 @@ if prompt := st.chat_input('Como posso ajudar?'):
     with st.spinner('Estudando 📖 ...'):
       message_place_holder = st.empty()
       full_response = ''
-      # for response in openai.ChatCompletion.create(
-      #     model=st.session_state.openai_model,
-      #     messages=[
-      #         {
-      #             'role': m['role'],
-      #             'content': full_prompt
-      #         } for m in st.session_state.messages
-      #     ],
-      #     temperature=0,
-      #     stream=True,
-      # ):
-      #     if 'choices' in response:
-      #         delta = response['choices'][0]['delta']
-      #         if 'content' in delta: 
-      #             full_response += (delta['content'] or '')
-      #         message_place_holder.markdown(full_response + '▌')
-      
-      # full_response = answer_question(list_documents, prompt)
+
       for chunk in answer_question(list_documents, prompt).content.split():
         full_response += chunk + " "
         time.sleep(0.1)
