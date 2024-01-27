@@ -4,3 +4,4 @@ openai==0.27.10
 pymongo==4.5.0
 python-dotenv==1.0.1
 streamlit==1.28.0
+sentence-transformers
